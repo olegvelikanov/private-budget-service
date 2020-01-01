@@ -56,7 +56,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>io.github.olegvelikanov.TerminalAppKt</mainClass>
+                    <mainClass>io.github.olegvelikanov.budgetservice.TerminalAppKt</mainClass>
                 </configuration>
                 <executions>
                     <execution>
