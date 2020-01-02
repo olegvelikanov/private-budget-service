@@ -13,11 +13,21 @@ class BudgetService {
     private var expensesCache: HashMap<Long, Expense> = hashMapOf()
 
     fun addExpense(amount: Int, category: String, date: LocalDate) {
-        expensesCache[idBuilder.get()] = Expense(idBuilder.getAndIncrement(), amount, category, date)
+        expensesCache[idBuilder.getAndIncrement()] = Expense(amount, category, date)
         logger.info("New expense added with amount: $amount in category: $category by date: $date")
     }
 
     fun removeExpense(id: Long) {
         expensesCache.remove(id)
+    }
+
+    fun findExpensesInPeriod(from: LocalDate, to: LocalDate): HashMap<Long, Expense> {
+        val result: HashMap<Long, Expense> = hashMapOf()
+        expensesCache.forEach {
+            if (it.value.date in from..to) {
+                result[it.key] = it.value
+            }
+        }
+        return result
     }
 }
