@@ -9,11 +9,17 @@ import java.util.concurrent.atomic.AtomicLong
 @Service
 class BudgetService {
     val logger: Logger = LoggerFactory.getLogger(BudgetService::class.java.simpleName)
-    private var idBuilder = AtomicLong()
-    private var expensesCache: HashMap<Long, Expense> = hashMapOf()
+
+    private val expensesIdBuilder = AtomicLong()
+    private val expensesCache: HashMap<Long, Expense> = hashMapOf()
+
+    private val accountsCache: HashMap<Long, Account> = hashMapOf(
+        Pair(0L, Account(0, AccountType.DEBIT)),
+        Pair(1L, Account(0, AccountType.CREDIT))
+    )
 
     fun addExpense(amount: Int, category: String, date: LocalDate) {
-        expensesCache[idBuilder.getAndIncrement()] = Expense(amount, category, date)
+        expensesCache[expensesIdBuilder.getAndIncrement()] = Expense(amount, category, date)
         logger.info("New expense added with amount: $amount in category: $category by date: $date")
     }
 
@@ -29,5 +35,9 @@ class BudgetService {
             }
         }
         return result
+    }
+
+    fun getAccountsData(): HashMap<Long, Account> {
+        return accountsCache
     }
 }
