@@ -1,16 +1,24 @@
 package io.github.olegvelikanov.budgetservice
 
-import java.time.LocalDate
-import kotlinx.serialization.*
+import kotlinx.serialization.Decoder
+import kotlinx.serialization.Encoder
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
 import kotlinx.serialization.internal.StringDescriptor
+import kotlinx.serialization.withName
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Serializable
-data class Expense(var amount: Int, var category: String, @Serializable(with = LocalDateSerializer::class) var date: LocalDate) {
-}
+data class Expense(
+    var amount: Int,
+    var category: String, @Serializable(with = LocalDateSerializer::class) var date: LocalDate
+)
 
 @Serializer(forClass = LocalDate::class)
-object LocalDateSerializer: KSerializer<LocalDate> {
+object LocalDateSerializer : KSerializer<LocalDate> {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     override val descriptor: SerialDescriptor =
