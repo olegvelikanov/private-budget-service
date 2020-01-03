@@ -40,4 +40,13 @@ class BudgetService {
     fun getAccountsData(): HashMap<Long, Account> {
         return accountsCache
     }
+
+    fun updateAccountAmount(id: Long, amount: Int) {
+        if (accountsCache.containsKey(id)) {
+            accountsCache[id]!!.amount = amount
+        } else {
+            throw IllegalArgumentException("Account id=$id doesn't exist.")
+        }
+
+    }
 }

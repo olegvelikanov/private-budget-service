@@ -8,7 +8,8 @@ import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.map
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.OK
+import org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,8 +24,8 @@ class BudgetController(private val budgetService: BudgetService) {
     val logger: Logger = LoggerFactory.getLogger(BudgetController::class.java.simpleName)
     val json = Json(JsonConfiguration.Stable)
 
-    @PostMapping("/addExpense", produces = [APPLICATION_JSON_VALUE])
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/addExpense", consumes = [APPLICATION_JSON_VALUE])
+    @ResponseStatus(OK)
     fun addExpense(@RequestParam amount: Int, category: String, date: LocalDate) {
         budgetService.addExpense(amount, category, date)
     }
@@ -33,6 +34,12 @@ class BudgetController(private val budgetService: BudgetService) {
     fun getAccountsData(): String {
         val data: HashMap<Long, Account> = budgetService.getAccountsData()
         return json.stringify((LongSerializer to Account.serializer()).map, data)
+    }
+
+    @PostMapping("/updateAccountAmount", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
+    @ResponseStatus(OK)
+    fun updateAccountAmount(@RequestParam id: Long, amount: Int) {
+        budgetService.updateAccountAmount(id, amount)
     }
 
 }
