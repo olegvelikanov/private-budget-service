@@ -2,10 +2,9 @@ package io.github.olegvelikanov.budgetservice.controller
 
 import io.github.olegvelikanov.budgetservice.Account
 import io.github.olegvelikanov.budgetservice.BudgetService
-import kotlinx.serialization.internal.LongSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.map
+import kotlinx.serialization.list
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.OK
@@ -32,8 +31,11 @@ class BudgetController(private val budgetService: BudgetService) {
 
     @GetMapping("/getAccountsData", produces = [APPLICATION_JSON_VALUE])
     fun getAccountsData(): String {
-        val data: HashMap<Long, Account> = budgetService.getAccountsData()
-        return json.stringify((LongSerializer to Account.serializer()).map, data)
+        val data = budgetService.getAccountsData()
+        val transformedData = mutableListOf<Account>()
+        transformedData.addAll(data.values)
+        logger.info("gave data")
+        return json.stringify(Account.serializer().list, transformedData)
     }
 
     @PostMapping("/updateAccountAmount", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
