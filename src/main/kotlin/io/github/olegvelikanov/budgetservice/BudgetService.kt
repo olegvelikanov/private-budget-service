@@ -42,11 +42,9 @@ class BudgetService {
     }
 
     fun updateAccountAmount(id: Long, amount: Int) {
-        if (accountsCache.containsKey(id)) {
-            (accountsCache[id] ?: return).amount = amount
-        } else {
-            throw IllegalArgumentException("Account id=$id doesn't exist.")
+        val element = accountsCache[id]
+        if (element != null) element.amount = amount else {
+            throw IllegalArgumentException("Account with id=$id doesn't exist.")
         }
-
     }
 }
