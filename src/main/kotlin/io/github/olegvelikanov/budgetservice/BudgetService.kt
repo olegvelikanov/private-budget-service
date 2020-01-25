@@ -14,8 +14,8 @@ class BudgetService {
     private val expensesCache: HashMap<Long, Expense> = hashMapOf()
 
     private val accountsCache: HashMap<Long, Account> = hashMapOf(
-        Pair(0L, Account(0, AccountType.DEBIT)),
-        Pair(1L, Account(0, AccountType.CREDIT))
+        Pair(0L, Account(0L, 0, AccountType.DEBIT)),
+        Pair(1L, Account(1L, 0, AccountType.CREDIT))
     )
 
     fun addExpense(amount: Int, category: String, date: LocalDate) {
