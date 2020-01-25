@@ -43,7 +43,7 @@ class BudgetService {
 
     fun updateAccountAmount(id: Long, amount: Int) {
         if (accountsCache.containsKey(id)) {
-            accountsCache[id]!!.amount = amount
+            (accountsCache[id] ?: return).amount = amount
         } else {
             throw IllegalArgumentException("Account id=$id doesn't exist.")
         }
