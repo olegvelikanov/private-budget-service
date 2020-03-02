@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    properties:
+      hibernate:
+        default_schema: budget_schema
+  datasource:
+    url: jdbc:postgresql://docker:5432/budget
+    username: placeholder
+    password: placeholder
+

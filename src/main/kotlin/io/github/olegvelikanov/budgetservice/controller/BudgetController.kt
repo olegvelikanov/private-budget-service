@@ -1,7 +1,8 @@
 package io.github.olegvelikanov.budgetservice.controller
 
 import io.github.olegvelikanov.budgetservice.Account
-import io.github.olegvelikanov.budgetservice.BudgetService
+import io.github.olegvelikanov.budgetservice.service.AccountService
+import io.github.olegvelikanov.budgetservice.service.ExpenseService
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.list
@@ -15,33 +16,28 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDate
 
 @RestController
-class BudgetController(private val budgetService: BudgetService) {
+class BudgetController(private val expenseService: ExpenseService, private val accountService: AccountService) {
 
     val logger: Logger = LoggerFactory.getLogger(BudgetController::class.java.simpleName)
     val json = Json(JsonConfiguration.Stable)
 
-    @PostMapping("/addExpense", consumes = [APPLICATION_JSON_VALUE])
-    @ResponseStatus(OK)
-    fun addExpense(@RequestParam amount: Int, category: String, date: LocalDate) {
-        budgetService.addExpense(amount, category, date)
-    }
-
-    @GetMapping("/getAccountsData", produces = [APPLICATION_JSON_VALUE])
+    @GetMapping("/getAllAccounts", produces = [APPLICATION_JSON_VALUE])
     fun getAccountsData(): String {
-        val data = budgetService.getAccountsData()
-        val transformedData = mutableListOf<Account>()
-        transformedData.addAll(data.values)
-        logger.info("gave data")
-        return json.stringify(Account.serializer().list, transformedData)
+        return json.stringify(Account.serializer().list, accountService.getAllAccounts())
     }
 
-    @PostMapping("/updateAccountAmount", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
+    @PostMapping("/updateAccountAmountById", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
     fun updateAccountAmount(@RequestParam id: Long, amount: Int) {
-        budgetService.updateAccountAmount(id, amount)
+//        accountService.updateAccountAmount(id, amount)
     }
+
+//    @PostMapping("/addExpense", consumes = [APPLICATION_JSON_VALUE])
+//    @ResponseStatus(OK)
+//    fun addExpense(@RequestParam amount: Int, category: String, date: LocalDate) {
+//        expenseService.addExpense(amount, category, date)
+//    }
 
 }
