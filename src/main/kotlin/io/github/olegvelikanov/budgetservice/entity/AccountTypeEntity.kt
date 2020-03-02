@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "account_type")
-class AccountTypeEntity(
+data class AccountTypeEntity(
     @Id @GeneratedValue var id: Long,
     var type: String
 )

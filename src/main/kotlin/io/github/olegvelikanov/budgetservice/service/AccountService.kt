@@ -12,4 +12,10 @@ class AccountService(val accountRepository: AccountRepository) {
         return accountRepository.findAll().map { Account(it) }.toMutableList()
     }
 
+    fun updateAccountAmount(id: Long, amount: Int) {
+        var account = accountRepository.findById(id).orElseThrow { RuntimeException("No account with id=$id found") }
+        account.amount = amount
+        accountRepository.save(account)
+    }
+
 }

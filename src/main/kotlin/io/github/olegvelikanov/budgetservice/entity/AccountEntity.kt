@@ -8,7 +8,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "account")
-class AccountEntity(
+data class AccountEntity(
     @Id @GeneratedValue var id: Long,
     var amount: Int,
     @ManyToOne var accountType: AccountTypeEntity

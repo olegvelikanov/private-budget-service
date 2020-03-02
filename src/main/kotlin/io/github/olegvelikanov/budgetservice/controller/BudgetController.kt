@@ -31,6 +31,12 @@ class BudgetController(private val expenseService: ExpenseService, private val a
     @PostMapping("/updateAccountAmountById", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
     fun updateAccountAmount(@RequestParam id: Long, amount: Int) {
+        accountService.updateAccountAmount(id, amount)
+    }
+
+    @PostMapping("/addAccount", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
+    @ResponseStatus(OK)
+    fun addAccount(@RequestParam amount: Int, type: String) {
 //        accountService.updateAccountAmount(id, amount)
     }
 
