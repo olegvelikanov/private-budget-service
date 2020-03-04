@@ -10,6 +10,9 @@ import javax.persistence.Table
 @Entity
 @Table(name = "account_type")
 data class AccountTypeEntity(
-    @Id @GeneratedValue var id: Long,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long,
+
     var type: String
 )
