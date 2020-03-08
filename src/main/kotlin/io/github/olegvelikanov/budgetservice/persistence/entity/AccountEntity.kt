@@ -1,18 +1,22 @@
-package io.github.olegvelikanov.budgetservice.entity
+package io.github.olegvelikanov.budgetservice.persistence.entity
 
-import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "account_type")
-data class AccountTypeEntity(
+@Table(name = "account")
+data class AccountEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
 
-    var type: String
+    var balance: Int,
+
+    @ManyToOne
+    var accountType: AccountTypeEntity
 )
+

@@ -3,9 +3,9 @@ spring:
     database: POSTGRESQL
     properties:
       hibernate:
-        default_schema: budget_schema
+        default_schema: <default_schema_name>
   datasource:
-    url: jdbc:postgresql://docker:5432/budget
-    username: placeholder
-    password: placeholder
+    url: jdbc:postgresql://<host>:<port>/<dbName>
+    username: <username>
+    password: <password>
 
