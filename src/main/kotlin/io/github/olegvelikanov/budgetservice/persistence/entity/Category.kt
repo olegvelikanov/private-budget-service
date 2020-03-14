@@ -1,17 +1,17 @@
 package io.github.olegvelikanov.budgetservice.persistence.entity
 
+import kotlinx.serialization.Serializable
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.Table
 
+@Serializable
 @Entity
-@Table(name = "account_type")
-data class AccountTypeEntity(
+data class Category(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
 
-    var type: String
+    var category: String
 )

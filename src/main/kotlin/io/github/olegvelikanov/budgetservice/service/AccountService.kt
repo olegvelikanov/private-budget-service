@@ -1,19 +1,17 @@
 package io.github.olegvelikanov.budgetservice.service
 
-import io.github.olegvelikanov.budgetservice.Account
-import io.github.olegvelikanov.budgetservice.persistence.entity.AccountEntity
-import io.github.olegvelikanov.budgetservice.persistence.entity.AccountTypeEntity
+import io.github.olegvelikanov.budgetservice.persistence.entity.Account
+import io.github.olegvelikanov.budgetservice.persistence.entity.accountTypeFromString
 import io.github.olegvelikanov.budgetservice.persistence.repository.AccountRepository
-import io.github.olegvelikanov.budgetservice.persistence.repository.AccountTypeRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class AccountService(val accountRepository: AccountRepository, val accountTypeRepository: AccountTypeRepository) {
+class AccountService(val accountRepository: AccountRepository) {
     private val accountsCache: HashMap<Long, Account> = hashMapOf()
 
     fun getAllAccounts(): List<Account> {
-        return accountRepository.findAll().map { Account(it) }.toList()
+        return accountRepository.findAll().toList()
     }
 
     fun updateAccountBalance(id: Long, balance: Int) {
@@ -24,13 +22,9 @@ class AccountService(val accountRepository: AccountRepository, val accountTypeRe
 
     @Transactional
     fun addAccount(balance: Int, type: String) {
-        val accountTypeOptional = accountTypeRepository.findByType(type)
+        val accountType = accountTypeFromString(type)
 
-        val accountType = accountTypeOptional.orElseGet {
-            accountTypeRepository.save(AccountTypeEntity(0, type))
-        }
-
-        val account = AccountEntity(0, balance, accountType)
+        val account = Account(0, balance, accountType)
         accountRepository.save(account)
     }
 

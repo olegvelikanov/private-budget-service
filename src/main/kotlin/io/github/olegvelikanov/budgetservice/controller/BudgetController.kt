@@ -1,12 +1,12 @@
 package io.github.olegvelikanov.budgetservice.controller
 
-import io.github.olegvelikanov.budgetservice.Account
-import io.github.olegvelikanov.budgetservice.Expense
+import io.github.olegvelikanov.budgetservice.persistence.entity.Account
+import io.github.olegvelikanov.budgetservice.persistence.entity.Expense
 import io.github.olegvelikanov.budgetservice.service.AccountService
 import io.github.olegvelikanov.budgetservice.service.ExpenseService
+import kotlinx.serialization.builtins.list
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.builtins.list
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.OK
@@ -48,8 +48,8 @@ class BudgetController(private val expenseService: ExpenseService, private val a
 
     @PostMapping("/addExpense", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
-    fun addExpense(@RequestParam amount: Int, accountId: Long) {
-        expenseService.addExpense(amount, accountId)
+    fun addExpense(@RequestParam amount: Int, categoryId: Long, accountId: Long) {
+        expenseService.addExpense(amount, categoryId, accountId)
     }
 
 }
