@@ -46,10 +46,10 @@ class BudgetController(private val expenseService: ExpenseService, private val a
         return json.stringify(Expense.serializer().list, expenseService.getAllExpenses())
     }
 
-//    @PostMapping("/addExpense", consumes = [APPLICATION_JSON_VALUE])
-//    @ResponseStatus(OK)
-//    fun addExpense(@RequestParam amount: Int, category: String, date: LocalDate) {
-//        expenseService.addExpense(amount, category, date)
-//    }
+    @PostMapping("/addExpense", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
+    @ResponseStatus(OK)
+    fun addExpense(@RequestParam amount: Int, accountId: Long) {
+        expenseService.addExpense(amount, accountId)
+    }
 
 }

@@ -6,6 +6,7 @@ import io.github.olegvelikanov.budgetservice.persistence.entity.AccountTypeEntit
 import io.github.olegvelikanov.budgetservice.persistence.repository.AccountRepository
 import io.github.olegvelikanov.budgetservice.persistence.repository.AccountTypeRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AccountService(val accountRepository: AccountRepository, val accountTypeRepository: AccountTypeRepository) {
@@ -21,6 +22,7 @@ class AccountService(val accountRepository: AccountRepository, val accountTypeRe
         accountRepository.save(account)
     }
 
+    @Transactional
     fun addAccount(balance: Int, type: String) {
         val accountTypeOptional = accountTypeRepository.findByType(type)
 

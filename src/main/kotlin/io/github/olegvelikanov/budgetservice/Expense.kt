@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter
 data class Expense(
     var id: Long,
     var amount: Int,
-    var account: Long
+    var accountId: Long
 ) {
     constructor(expense: ExpenseEntity) : this(expense.id, expense.amount, expense.account.id)
 }
