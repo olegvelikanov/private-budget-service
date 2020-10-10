@@ -1,4 +1,9 @@
+### Gradle build ###
+.gradle
+build
+
+### IntelliJ IDEA ###
 .idea
-target
+
+### OS specific ###
 .DS_Store
-*.sql
