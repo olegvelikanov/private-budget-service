@@ -1,12 +1,9 @@
 package io.github.olegvelikanov.budgetservice.controller
 
-import io.github.olegvelikanov.budgetservice.persistence.entity.Account
-import io.github.olegvelikanov.budgetservice.persistence.entity.Expense
 import io.github.olegvelikanov.budgetservice.service.AccountService
 import io.github.olegvelikanov.budgetservice.service.ExpenseService
-import kotlinx.serialization.builtins.list
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.OK
@@ -21,12 +18,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class BudgetController(private val expenseService: ExpenseService, private val accountService: AccountService) {
 
-    val logger: Logger = LoggerFactory.getLogger(BudgetController::class.java.simpleName)
-    val json = Json(JsonConfiguration.Stable)
+    val log: Logger = LoggerFactory.getLogger(BudgetController::class.java.simpleName)
 
     @GetMapping("/getAllAccounts", produces = [APPLICATION_JSON_VALUE])
     fun getAccountsData(): String {
-        return json.stringify(Account.serializer().list, accountService.getAllAccounts())
+        return Json.encodeToString(accountService.getAllAccounts())
     }
 
     @PostMapping("/updateAccountBalanceById", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
@@ -43,7 +39,7 @@ class BudgetController(private val expenseService: ExpenseService, private val a
 
     @GetMapping("/getAllExpenses", produces = [APPLICATION_JSON_VALUE])
     fun getExpensesData(): String {
-        return json.stringify(Expense.serializer().list, expenseService.getAllExpenses())
+        return Json.encodeToString(expenseService.getAllExpenses())
     }
 
     @PostMapping("/addExpense", consumes = [APPLICATION_FORM_URLENCODED_VALUE])

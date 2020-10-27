@@ -1,10 +1,12 @@
 package io.github.olegvelikanov.budgetservice.persistence.entity
 
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -28,8 +30,10 @@ data class Expense(
     var account: Account
 )
 
-@Serializer(forClass = Account::class)
 object AccountSerializer : KSerializer<Account> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Account", PrimitiveKind.STRING)
+
 
     override fun serialize(encoder: Encoder, value: Account) {
         encoder.encodeLong(value.id)
