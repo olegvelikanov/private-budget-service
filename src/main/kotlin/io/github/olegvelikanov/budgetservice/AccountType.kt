@@ -1,4 +1,4 @@
-package io.github.olegvelikanov.budgetservice.persistence.entity
+package io.github.olegvelikanov.budgetservice
 
 enum class AccountType(val type: String) {
     DBT("DBT"),

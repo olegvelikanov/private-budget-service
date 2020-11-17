@@ -19,7 +19,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.10")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
     implementation("org.springframework.boot:spring-boot-starter-web:2.2.4.RELEASE")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:2.2.4.RELEASE")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:2.2.4.RELEASE")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
     implementation("com.h2database:h2:1.4.200")
 }

@@ -1,4 +1,4 @@
-package io.github.olegvelikanov.budgetservice.persistence.entity
+package io.github.olegvelikanov.budgetservice
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -7,27 +7,19 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import org.springframework.data.annotation.Id
 
 @Serializable
-@Entity
 data class Expense(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+        @Id
+        var id: Long,
 
-    var amount: Int,
+        var amount: Int,
 
-    @ManyToOne
-    var category: Category,
+        var category: Category,
 
-    @Serializable(with = AccountSerializer::class)
-    @ManyToOne
-    var account: Account
+        @Serializable(with = AccountSerializer::class)
+        var account: Account
 )
 
 object AccountSerializer : KSerializer<Account> {

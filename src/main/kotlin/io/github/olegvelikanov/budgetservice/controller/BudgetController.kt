@@ -9,11 +9,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.OK
 import org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class BudgetController(private val expenseService: ExpenseService, private val accountService: AccountService) {
@@ -28,24 +24,24 @@ class BudgetController(private val expenseService: ExpenseService, private val a
     @PostMapping("/updateAccountBalanceById", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
     fun updateAccountAmount(@RequestParam id: Long, balance: Int) {
-        accountService.updateAccountBalance(id, balance)
+        // update account amount
     }
 
     @PostMapping("/addAccount", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
     fun addAccount(@RequestParam balance: Int, type: String) {
-        accountService.addAccount(balance, type)
+        // add account
     }
 
     @GetMapping("/getAllExpenses", produces = [APPLICATION_JSON_VALUE])
     fun getExpensesData(): String {
-        return Json.encodeToString(expenseService.getAllExpenses())
+        return Json.encodeToString("all expenses")
     }
 
     @PostMapping("/addExpense", consumes = [APPLICATION_FORM_URLENCODED_VALUE])
     @ResponseStatus(OK)
     fun addExpense(@RequestParam amount: Int, categoryId: Long, accountId: Long) {
-        expenseService.addExpense(amount, categoryId, accountId)
+        // add expense
     }
 
 }
